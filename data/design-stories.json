@@ -1,0 +1,86 @@
+[
+   {
+      "title": "The Haven Philosophy",
+      "headline": "공간을 정의하는 디자인",
+      "overview": "Haven은 불필요한 것을 덜어내고 형태의 본질에 집중합니다. 정제된 라인과 완벽한 비례감은 당신의 공간에 감각적인 질서를 더하여, 시간이 흘러도 변치 않는 평온한 안식처를 만듭니다.",
+      "image": "./images/stories/philosophy.jpg",
+      "features": [
+         {
+            "name": "Timeless Design",
+            "tech": ["Minimalism", "Naturalism"],
+            "desc": "유행을 타지 않는 간결한 디자인으로, 어떤 공간에도 자연스럽게 어우러져 오랜 시간 함께할 수 있는 가치를 추구합니다."
+         },
+         {
+            "name": "Sustainable Materials",
+            "tech": ["FSC Certified Wood", "Eco-Friendly Finishes"],
+            "desc": "책임감 있게 관리된 숲에서 얻은 목재와 인체에 무해한 마감재를 사용하여, 사람과 자연 모두를 생각하는 가구를 만듭니다."
+         }
+      ],
+      "links": {
+         "shop_category": "/about"
+      }
+   },
+   {
+      "title": "The Art of Comfort: Sofas",
+      "headline": "이탈리아 가죽과 기능성 패브릭",
+      "overview": "최고급 풀그레인 가죽과 오염에 강한 기능성 패브릭만을 사용하여, 숙련된 장인이 모든 과정을 수작업으로 완성합니다. 앉는 순간 온몸을 감싸는 듯한 착좌감은 Haven 소파가 선사하는 최고의 휴식입니다.",
+      "image": "./images/stories/sofas.jpg",
+      "features": [
+         {
+            "name": "Premium Italian Leather",
+            "tech": ["Full-Grain Aniline"],
+            "desc": "'숨쉬는 가죽'으로 불리는 최상급 아닐린 가죽을 사용하여, 시간이 지날수록 더욱 깊어지는 멋과 부드러운 촉감을 선사합니다."
+         },
+         {
+            "name": "Easy-Clean Fabric",
+            "tech": ["Stain-Resistant Coating", "Water Repellent"],
+            "desc": "생활 오염과 발수 기능이 뛰어난 특수 코팅 원단으로, 반려동물과 아이가 있는 집에서도 손쉽게 관리할 수 있습니다."
+         }
+      ],
+      "links": {
+         "shop_category": "/shop/sofas"
+      }
+   },
+   {
+      "title": "The Centerpiece: Tables",
+      "headline": "북미산 원목이 주는 견고함",
+      "overview": "당신의 일상이 이루어지는 공간, 테이블은 가장 견고하고 아름다워야 합니다. 북미산 최상급 오크 원목을 사용하여 나무 본연의 깊은 색감과 견고함을 살렸습니다. 모든 순간을 함께하는 특별한 가구가 될 것입니다.",
+      "image": "./images/stories/tables.jpg",
+      "features": [
+         {
+            "name": "Solid North American Oak",
+            "tech": ["FAS Grade Oak Wood", "Natural Oil Finish"],
+            "desc": "최상급 FAS 등급의 북미산 오크 원목만을 통으로 사용하여, 휘거나 갈라짐 없이 대를 이어 사용할 수 있는 견고함을 자랑합니다."
+         },
+         {
+            "name": "Handcrafted Joinery",
+            "tech": ["Dovetail & Mortise-Tenon Joints"],
+            "desc": "못이나 나사를 사용하지 않는 전통적인 짜맞춤 기법으로, 장인의 손길을 통해 보이지 않는 부분까지 완벽하게 마감합니다."
+         }
+      ],
+      "links": {
+         "shop_category": "/shop/tables"
+      }
+   },
+   {
+      "title": "Elegant Order: Storage",
+      "headline": "아름다움과 실용성의 조화",
+      "overview": "단순한 수납을 넘어, 공간의 품격을 높이는 오브제가 됩니다. 소음 없는 댐핑 경첩과 군더더기 없는 디자인은, 당신의 공간을 더욱 넓고 아름답게 만들어주는 실용적인 솔루션입니다.",
+      "image": "./images/stories/storage.jpg",
+      "features": [
+         {
+            "name": "Silent Soft-Closing System",
+            "tech": ["German Damping Hinges"],
+            "desc": "세계적으로 인정받는 독일사의 댐핑 하드웨어를 적용하여, 소음 없이 부드럽게 닫히는 최상의 사용감을 제공합니다."
+         },
+         {
+            "name": "Modular & Customizable",
+            "tech": ["Customizable Units", "Various Finishes"],
+            "desc": "공간의 크기와 필요에 따라 유닛을 자유롭게 조합하고, 다양한 색상과 소재의 마감을 선택하여 나만의 수납장을 완성할 수 있습니다."
+         }
+      ],
+      "links": {
+         "shop_category": "/shop/storage"
+      }
+   }
+]

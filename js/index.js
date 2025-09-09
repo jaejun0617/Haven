@@ -7,17 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
    initMobileMenu();
    loadInstagramFeed();
    initLookBookGallery();
+   setupDesignStoryScroll(); // Design Story 애니메이션 초기화
 });
 
 // ===================================================================
 // [ 공용 유틸리티 함수 ]
 // ===================================================================
-
-/**
- * 지정된 URL에서 JSON 데이터를 비동기적으로 가져오는 범용 함수
- * @param {string} url - 불러올 JSON 파일의 경로
- * @returns {Promise<any>} - 성공 시 파싱된 JSON 데이터, 실패 시 에러를 던짐
- */
 async function fetchJSON(url) {
    const response = await fetch(url);
    if (!response.ok) {
@@ -31,93 +26,174 @@ async function fetchJSON(url) {
 // ===================================================================
 
 function initMobileMenu() {
-   const mobileMenuButton = document.querySelector('.mobile-nav-toggle');
-   const navMenu = document.querySelector('.main-nav');
-
-   if (mobileMenuButton && navMenu) {
-      mobileMenuButton.addEventListener('click', () => {
-         navMenu.classList.toggle('active');
-         mobileMenuButton.classList.toggle('active');
-      });
-   } else {
-      console.error(
-         '모바일 메뉴 버튼 또는 네비게이션 메뉴를 찾을 수 없습니다.',
-      );
-   }
+   /* 이전과 동일 */
 }
-
 async function loadInstagramFeed() {
-   const instarGrid = document.querySelector('.instar-grid');
-   if (!instarGrid) return;
-
-   try {
-      const feedData = await fetchJSON('../data/instagram-feed.json');
-
-      const feedItemsHTML = feedData
-         .map(
-            (item) => `
-            <a href="#" class="instar-item" data-aos="fade-up">
-                <img src="${item.imageUrl}" alt="인스타그램 피드 이미지"> <br>
-                <span class="hashtag">${item.hashtag}</span>
-                <div class="instar-item__overlay">
-                    <span class="likes">❤️ ${item.likes}</span>
-                    <span class="comments">💬 ${item.comments}</span>
-                </div>
-            </a>
-        `,
-         )
-         .join('');
-
-      instarGrid.innerHTML = feedItemsHTML;
-   } catch (error) {
-      console.error(
-         '인스타그램 피드를 불러오는 중 오류가 발생했습니다:',
-         error,
-      );
-      instarGrid.innerHTML = `<div class="error-message"><p>피드를 불러오는 데 실패했습니다.</p></div>`;
-   }
+   /* 이전과 동일 */
 }
-
 async function initLookBookGallery() {
-   const $gallery = $('.showroom__gallery');
-   const $filter = $('.showroom__filter');
-   if (!$gallery.length) return;
+   /* 이전과 동일 */
+}
+
+/**
+ * 📄 [Design Stories] 스크롤 기반 스토리 애니메이션 및 모달 기능 설정 (최적화 버전)
+ */
+async function setupDesignStoryScroll() {
+   const storySection = document.querySelector('#design-stories');
+   if (!storySection) return;
+
+   // 애니메이션에 필요한 요소 선택
+   const scrollContainer = document.querySelector('.story-scroll-container');
+   const slides = document.querySelectorAll('.story-slide');
+   const storyTitle = document.getElementById('story-title');
+   const storyDescription = document.getElementById('story-description');
+   const storyContent = document.querySelector('.story-content');
+
+   // [추가] 모달창 관련 요소 선택
+   const storyModal = document.getElementById('storyDetailModal'); // HTML에 모달 ID가 있는지 확인하세요!
+
+   if (
+      !scrollContainer ||
+      slides.length === 0 ||
+      !storyTitle ||
+      !storyDescription
+   ) {
+      return;
+   }
+
+   // [추가] 모달이 없다면 모달 기능 없이 진행
+   const modalContent = storyModal
+      ? storyModal.querySelector('.modal-content')
+      : null;
 
    try {
-      const galleryData = await fetchJSON('../data/galleryData.json');
+      // 수정된 'design-stories.json' 파일을 로드합니다.
+      const storyData = await fetchJSON('./data/design-stories.json');
 
-      const galleryItemsHTML = galleryData
-         .map(
-            (item) => `
-            <div class="showroom__gallery-item ${item.category}">
-                <img src="${item.src}" alt="${item.title}">
-                <div class="item-overlay">${item.title}</div>
-            </div>
-        `,
-         )
-         .join('');
+      if (storyData.length > 0) {
+         storyTitle.textContent = storyData[0].title;
+         storyDescription.innerHTML = `<h3>${storyData[0].headline}</h3><p class="overview">${storyData[0].overview}</p>`;
+      }
 
-      $gallery.html(galleryItemsHTML);
+      let ticking = false;
 
-      $gallery.imagesLoaded(function () {
-         $gallery.isotope({
-            itemSelector: '.showroom__gallery-item',
-            layoutMode: 'masonry',
-            transitionDuration: '0.5s',
-            filter: '.living-room',
+      const handleScrollAnimation = () => {
+         // ... (스크롤 애니메이션 로직은 이전 답변과 동일) ...
+         const containerRect = scrollContainer.getBoundingClientRect();
+         const viewportHeight = window.innerHeight;
+         const isAnimating =
+            containerRect.top <= 0 && containerRect.bottom >= viewportHeight;
+
+         if (isAnimating) {
+            const scrollableDistance = containerRect.height - viewportHeight;
+            const scrollProgress = Math.max(
+               0,
+               Math.min(1, -containerRect.top / scrollableDistance),
+            );
+            let activeIndex = Math.floor(
+               scrollProgress * (slides.length - 0.001),
+            );
+
+            if (
+               storyData[activeIndex] &&
+               storyTitle.textContent !== storyData[activeIndex].title
+            ) {
+               storyContent.style.opacity = 0;
+               setTimeout(() => {
+                  storyTitle.textContent = storyData[activeIndex].title;
+                  storyDescription.innerHTML = `<h3>${storyData[activeIndex].headline}</h3><p class="overview">${storyData[activeIndex].overview}</p>`;
+                  storyContent.style.opacity = 1;
+               }, 300);
+            }
+
+            slides.forEach((slide, index) => {
+               // ... (슬라이드 상태 업데이트 로직은 이전 답변과 동일) ...
+               slide.classList.remove('is-active', 'is-previous');
+               if (index === activeIndex) {
+                  slide.classList.add('is-active');
+                  slide.style.transform = 'translateY(0) scale(1)';
+                  slide.style.opacity = 1;
+               } else if (index < activeIndex) {
+                  slide.classList.add('is-previous');
+                  const distance = activeIndex - index;
+                  const offset = distance * 40;
+                  const scale = 1 - distance * 0.05;
+                  slide.style.transform = `translateY(-${offset}px) scale(${scale})`;
+                  slide.style.opacity = Math.max(0, 0.6 - distance * 0.2);
+               } else {
+                  slide.style.transform = 'translateY(50px) scale(0.95)';
+                  slide.style.opacity = 0;
+               }
+            });
+         }
+      };
+
+      window.addEventListener('scroll', () => {
+         if (!ticking) {
+            window.requestAnimationFrame(() => {
+               handleScrollAnimation();
+               ticking = false;
+            });
+            ticking = true;
+         }
+      });
+
+      // --- [수정] 모달 관련 로직 ---
+
+      // 모달 기능은 모달 요소가 있을 때만 활성화
+      if (storyModal && modalContent) {
+         function openStoryModal(data) {
+            const featuresHtml = data.features
+               .map(
+                  (f) =>
+                     `<div class="feature-item"><h4>${f.name}</h4><p class="tech-stack"><strong>Keywords:</strong> ${f.tech.join(', ')}</p><p class="feature-desc">${f.desc}</p></div>`,
+               )
+               .join('');
+
+            // '자세히 보기' 또는 '쇼핑하기' 버튼 HTML 생성
+            const linkHtml = data.links.shop_category
+               ? `<a href="${data.links.shop_category}" class="link-shop">Shop This Category</a>`
+               : '';
+
+            modalContent.innerHTML = `
+                <button class="modal-close-btn">&times;</button>
+                <h2>${data.title}</h2>
+                <p class="overview">${data.overview}</p>
+                <hr>
+                ${featuresHtml}
+                <div class="modal-links">
+                   ${linkHtml}
+                </div>
+             `;
+            storyModal.classList.add('visible');
+            modalContent
+               .querySelector('.modal-close-btn')
+               .addEventListener('click', closeStoryModal);
+         }
+
+         function closeStoryModal() {
+            storyModal.classList.remove('visible');
+         }
+
+         storyModal.addEventListener('click', (e) => {
+            if (e.target === storyModal) closeStoryModal();
          });
-      });
 
-      $filter.on('click', 'li', function () {
-         const filterValue = $(this).attr('data-filter');
-         $gallery.isotope({ filter: filterValue });
-         $filter.find('li').removeClass('--active');
-         $(this).addClass('--active');
-      });
+         const storyVisuals = document.querySelector('.story-visuals');
+         storyVisuals.addEventListener('click', (e) => {
+            const clickedSlide = e.target.closest('.story-slide.is-active');
+            if (clickedSlide) {
+               const activeIndex = Array.from(slides).indexOf(clickedSlide);
+               if (storyData[activeIndex]) {
+                  openStoryModal(storyData[activeIndex]);
+               }
+            }
+         });
+      }
    } catch (error) {
-      console.error('룩북 갤러리를 초기화하는 중 오류가 발생했습니다:', error);
-      $gallery.html(
-         '<p class="error-message">갤러리를 불러올 수 없습니다.</p>',
-      );
+      console.error('Design Stories 애니메이션 설정 중 오류 발생:', error);
    }
 }
+
+// [참고] initMobileMenu, loadInstagramFeed, initLookBookGallery 함수는 이전과 동일하게 유지합니다.
+// 여기에 다시 작성하지 않았지만, 실제 파일에는 존재해야 합니다.

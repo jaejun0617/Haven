@@ -66,10 +66,11 @@ section {
    width: 100%;
    padding: 5rem 0;
    position: relative;
-   overflow-x: hidden;
-   /* border: 1px solid red; */
 }
 
+.section--overflow-hidden {
+   overflow-x: hidden;
+}
 .section-title {
    text-align: center;
    margin-bottom: 4rem;

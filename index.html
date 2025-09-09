@@ -308,6 +308,48 @@
                   </div>
                </div>
             </section>
+            <!-- 🔹 Design Stories Section: 스크롤 인터랙션 기반의 브랜드/가구 스토리 소개 -->
+            <section id="design-stories" class="section">
+               <div class="story-scroll-container">
+                  <div class="story-sticky-wrapper">
+                     <div class="story-details">
+                        <div class="story-content">
+                           <h1 id="story-title"></h1>
+                           <div id="story-description"></div>
+
+                           <a href="#" class="btn btn--primary">자세히 보기</a>
+                        </div>
+                     </div>
+
+                     <div class="story-visuals">
+                        <div class="story-slide is-active">
+                           <img
+                              src="./images/stories/philosophy.jpg"
+                              alt="Haven 브랜드 철학 이미지"
+                           />
+                        </div>
+                        <div class="story-slide">
+                           <img
+                              src="./images/stories/sofas.jpg"
+                              alt="Haven 소파 이미지"
+                           />
+                        </div>
+                        <div class="story-slide">
+                           <img
+                              src="./images/stories/tables.jpg"
+                              alt="Haven 테이블 이미지"
+                           />
+                        </div>
+                        <div class="story-slide">
+                           <img
+                              src="./images/stories/storage.jpg"
+                              alt="Haven 수납장 이미지"
+                           />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </section>
 
             <!-- =================================================================== -->
             <!-- PARALLAX SECTION: 배경과 함께 텍스트가 떠오르는 효과 -->
@@ -370,19 +412,12 @@
                      class="showroom__gallery"
                      data-aos="fade-up"
                      data-aos-delay="200"
-                  >
-                     <!-- 
-                        JS로 동적 렌더링될 갤러리 아이템들.
-                        JS로 아이템 생성 시, 각 아이템에 data-aos="fade-up"과 함께
-                        delay 값을 (index * 100)과 같이 순차적으로 부여하면
-                        더욱 동적인 효과를 줄 수 있습니다.
-                     -->
-                  </div>
+                  ></div>
                </div>
             </section>
 
             <!-- =================================================================== -->
-            <!-- INSTAGRAM FEED SECTION: 제목 등장 후, 그리드 전체가 나타남 -->
+            <!-- INSTAGRAM FEED SECTION
             <!-- =================================================================== -->
             <section class="instagram-feed">
                <div class="container">
@@ -397,17 +432,16 @@
                      class="instar-grid"
                      data-aos="fade-up"
                      data-aos-delay="100"
-                  >
-                     <!-- 
-                        JS로 동적 렌더링될 인스타그램 피드.
-                        Showroom 섹션과 마찬가지로, 개별 아이템에 순차적인 delay를 적용하면
-                        더욱 풍부한 애니메이션을 만들 수 있습니다.
-                     -->
-                  </div>
+                  ></div>
                </div>
             </section>
          </main>
 
+         <div id="storyDetailModal" class="story-modal">
+            <div class="modal-content">
+               <!-- JS에 의해 동적으로 내용이 채워질 영역 -->
+            </div>
+         </div>
          <!-- =================================================================== -->
          <!-- FOOTER: 마지막에 부드럽게 나타나는 푸터 -->
          <!-- =================================================================== -->
