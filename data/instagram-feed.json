@@ -1,0 +1,30 @@
+[
+   {
+      "id": 1,
+      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "likes": 1204,
+      "comments": 35,
+      "hashtag": "#Haver #소파 #감성 #공간"
+   },
+   {
+      "id": 2,
+      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "likes": 987,
+      "comments": 22,
+      "hashtag": "#Haver #소파 #감성 #공간"
+   },
+   {
+      "id": 3,
+      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "likes": 2310,
+      "comments": 58,
+      "hashtag": "#Haver #소파 #감성 #공간"
+   },
+   {
+      "id": 4,
+      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "likes": 754,
+      "comments": 19,
+      "hashtag": "#Haver #소파 #감성 #공간"
+   }
+]

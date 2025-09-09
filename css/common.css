@@ -1,0 +1,115 @@
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 1. CSS 변수 및 기본 설정                          */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+:root {
+   /* Color Palette */
+   --color-primary: #a88b79; /* Soft Brown */
+   --color-secondary: #eae3dd; /* Warm Beige */
+   --color-accent: #6b705c; /* Olive Green */
+   --color-text-primary: #3d403d; /* Dark Charcoal */
+   --color-text-secondary: #666666; /* Medium Gray */
+   --color-surface: #ffffff; /* White */
+   --color-background: #f7f5f2; /* Light Ivory */
+   --color-border: #dddddd; /* Light Gray Border */
+
+   /* Layout */
+   --header-height: 60px;
+   --container-padding: 1rem;
+   --container-width: 1280px;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+ul,
+li {
+   list-style: none;
+}
+a {
+   text-decoration: none;
+   color: inherit;
+}
+button {
+   background: none;
+   border: none;
+   cursor: pointer;
+}
+img {
+   display: block;
+   max-width: 100%;
+}
+
+body {
+   font-size: 62.5%;
+   color: var(--color-text-primary);
+   background-color: var(--color-background);
+   overflow-x: hidden;
+   font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+   line-height: 1.6;
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 2. 재사용 가능한 공통 컴포넌트                     */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.container {
+   width: 100%;
+   max-width: var(--container-width);
+   margin: 0 auto;
+   padding: 0 var(--container-padding);
+}
+
+section {
+   width: 100%;
+   padding: 5rem 0;
+   position: relative;
+   overflow-x: hidden;
+   /* border: 1px solid red; */
+}
+
+.section-title {
+   text-align: center;
+   margin-bottom: 4rem;
+}
+
+.section-title h2 {
+   font-size: 20px;
+   font-weight: 600;
+   margin-bottom: 1rem;
+}
+
+.section-title p {
+   font-size: 12px;
+   color: var(--color-text-secondary);
+}
+
+.btn {
+   display: inline-block;
+   padding: 0.5rem 0.5rem;
+   border-radius: 15px;
+   text-decoration: none;
+   font-weight: 600;
+   font-size: 20px;
+   transition: all 0.3s ease;
+}
+
+.btn--primary {
+   background-color: var(--color-primary);
+   color: var(--color-surface);
+}
+.btn--primary:hover {
+   background-color: var(--color-text-primary);
+}
+
+.btn--outline {
+   border: 2px solid var(--color-surface);
+   background-color: transparent;
+   color: var(--color-surface);
+}
+.btn--outline:hover {
+   background-color: var(--color-surface);
+   color: var(--color-text-primary);
+}

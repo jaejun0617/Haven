@@ -1,0 +1,527 @@
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 1. 기본 설정 및 초기화                            */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+ul,
+li {
+   list-style: none;
+}
+a {
+   text-decoration: none;
+   color: inherit;
+}
+button {
+   background: none;
+   border: none;
+   cursor: pointer;
+}
+
+body {
+   font-size: 62.5%;
+   color: #000000;
+   background-color: #f2f2f2;
+   overflow-x: hidden;
+   font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* 폰트 지정 추가 */
+}
+
+/* 재사용 가능한 컨테이너 클래스 */
+.container {
+   width: 100%;
+   max-width: 1920px;
+   margin: 0 auto;
+   padding: 0 2rem;
+}
+
+section {
+   width: 100%;
+   min-height: 100vh;
+   /* 헤더 높이(60px) + 상단 여백(4rem) */
+   padding: calc(60px + 4rem) 0 4rem 0;
+   position: relative;
+}
+.section-title {
+   margin-bottom: 1.5rem;
+   line-height: 1.5;
+}
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 2. 헤더 및 모바일 토글 버튼                        */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.header {
+   width: 100%;
+   height: 60px; /* 헤더 높이 */
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 1001;
+   padding: 0 1rem; /* 컨테이너 패딩 */
+   background-color: white;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.logo {
+   margin-right: auto;
+}
+.logo img {
+   width: 60px;
+   height: 60px;
+   object-fit: cover;
+}
+.header__utils {
+   display: flex;
+   align-items: center;
+   gap: 1.5rem;
+}
+
+.mobile-nav-toggle {
+   width: 24px;
+   height: 24px;
+   position: relative;
+   z-index: 1002;
+}
+
+.mobile-nav-toggle .icon-menu,
+.mobile-nav-toggle .icon-close {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+}
+
+.mobile-nav-toggle .icon-close {
+   opacity: 0;
+}
+.mobile-nav-toggle.active .icon-menu {
+   opacity: 0;
+}
+.mobile-nav-toggle.active .icon-close {
+   opacity: 1;
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 3. 슬라이드 네비게이션 (모바일 기본)              */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.main-nav {
+   position: fixed;
+   top: 0;
+   right: 0;
+   transform: translateX(100%);
+   width: 80%;
+   max-width: 300px;
+   height: 100vh;
+   background-color: rgba(255, 255, 255, 0.15);
+   -webkit-backdrop-filter: blur(20px);
+   backdrop-filter: blur(20px);
+   border-left: 1px solid rgba(255, 255, 255, 0.2);
+   box-shadow: -10px 0px 30px rgba(0, 0, 0, 0.1);
+   transition: transform 0.4s ease-in-out;
+   z-index: 1000;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 2rem;
+   padding-top: 60px;
+}
+
+.main-nav.active {
+   transform: translateX(0);
+}
+.main-nav__list {
+   display: contents;
+}
+.main-nav__item a {
+   display: block;
+   padding: 1rem;
+   font-size: 1.6rem;
+   font-weight: bold;
+}
+.dropdown-menu {
+   display: none;
+}
+
+.header__utils {
+   display: flex;
+}
+
+.header__icons {
+   display: flex;
+   gap: 1rem;
+}
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Hero (Banner) Section                             */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.hero {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   background-color: #dcdcdc;
+   width: 100%;
+   min-height: 100vh;
+   padding-top: 60px; /* 헤더 높이 */
+   position: relative;
+}
+
+.hero__content h2 {
+   font-size: 1.4rem;
+}
+.hero__content p {
+   font-size: 0.765rem;
+   margin-top: 1rem;
+}
+
+.hero-btn {
+   position: absolute;
+   border: 1px solid #000;
+   padding: 0.5rem 2rem;
+   top: 58%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Categories Section                                */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.categories {
+   padding-top: 5rem;
+   padding-bottom: 5rem;
+}
+.category-grid {
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+}
+
+.category-card {
+   width: 100%;
+   max-width: 500px;
+   height: 250px;
+   background-color: #e0e0e0;
+   position: relative;
+   overflow: hidden;
+   cursor: pointer;
+   border-radius: 12px;
+   margin: 0 auto;
+}
+
+.category-card__image-wrapper {
+   width: 100%;
+   height: 100%;
+   transition: transform 0.4s ease;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+}
+.category-card:hover .category-card__image-wrapper {
+   transform: scale(1.05);
+}
+
+.category-card__title h3 {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   font-size: 2.4rem;
+   color: #fff;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+   transition: opacity 0.3s ease;
+}
+.category-card:hover .category-card__title {
+   opacity: 0;
+}
+
+.category-card__overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.7);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #fff;
+   opacity: 0;
+   transition: opacity 0.3s ease;
+   text-align: center;
+   padding: 1rem;
+   font-size: 1.4rem;
+}
+.category-card:hover .category-card__overlay {
+   opacity: 1;
+}
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* featured Section                                */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+.featured-products {
+   padding: 5rem 0;
+   background-color: #f8f9fa;
+}
+
+.product-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 2rem;
+}
+
+.product-card {
+   background-color: #ffffff;
+   border-radius: 12px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+   overflow: hidden;
+   transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+   width: 100%;
+   height: 280px;
+   object-fit: cover;
+   display: block;
+}
+
+.product-info {
+   padding: 1rem 1.2rem;
+}
+
+.product-title {
+   font-size: 1rem;
+   font-weight: 600;
+   margin-bottom: 0.5rem;
+
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.product-detail {
+   font-size: 0.825rem;
+   color: #555;
+   line-height: 1.5;
+
+   margin-bottom: 1rem;
+
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+.product-price {
+   display: flex;
+   gap: 0.5rem;
+   align-items: center;
+}
+
+.original-price {
+   color: #666;
+}
+.sale-price {
+   font-size: 1rem;
+   font-weight: bold;
+   text-align: left;
+   color: #333;
+}
+
+.section-footer {
+   display: flex;
+   align-items: center;
+   margin-top: 4rem;
+   gap: 0.2rem;
+}
+.section-footer a {
+   font-size: 1rem;
+}
+.section-footer img {
+   width: 24px;
+   height: 24px;
+   object-fit: cover;
+   display: block;
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Parallax Section                                */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+.parallax {
+   width: 100%;
+   min-height: 100vh;
+   background-image: url(../images/main/parallax/parallax.bg-02.jpg);
+   background-position: center center;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   position: relative;
+   z-index: 0;
+}
+
+.parallax-overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 1;
+}
+
+.parallax-content {
+   position: relative;
+   z-index: 2;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+
+   /* 텍스트 스타일 */
+   color: white;
+   text-align: center;
+   padding: 0rem 1rem;
+}
+
+.parallax-content h2 {
+   font-size: 2rem;
+}
+
+.parallax-content p {
+   font-size: 0.825rem;
+   margin-top: 1rem;
+   line-height: 1.7;
+}
+
+.parallax-content button {
+   margin-top: 2rem;
+   padding: 0.8rem 2rem;
+   border: 2px solid white;
+   background-color: transparent;
+   color: white;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.parallax-content button:hover {
+   background-color: white;
+   color: black;
+}
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Footer Section                                */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.footer {
+   width: 100%;
+   height: auto;
+   border: 1px solid red;
+}
+.footer .container {
+   width: 100%;
+   max-width: 1920px;
+   margin: 0 auto;
+   padding: 0 0rem;
+}
+
+.footer-copyright {
+   width: 100%;
+}
+.footer-copyright p {
+   font-size: 0.625rem;
+   text-align: center;
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* 4. 데스크탑 스타일 (769px 이상)                   */
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+@media (min-width: 769px) {
+   .mobile-nav-toggle {
+      display: none;
+   }
+
+   .main-nav {
+      position: static;
+      transform: none;
+      width: auto;
+      height: auto;
+      max-width: none;
+      background: none;
+      backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+      flex-direction: row;
+      gap: 1rem;
+      padding-top: 0;
+   }
+
+   .main-nav__list {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+   }
+   .main-nav__item {
+      position: relative;
+   }
+   .main-nav__item a {
+      font-size: 1.4rem;
+      font-weight: 500;
+   }
+
+   .dropdown-menu {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 0.5rem;
+      margin-top: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   }
+
+   .main-nav__item:hover > .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+   }
+
+   .dropdown-menu a {
+      white-space: nowrap;
+   }
+   .hero {
+      min-height: 100vh;
+      padding-top: 60px; /* 헤더 높이 */
+   }
+   /* 카테고리 섹션 그리드 레이아웃으로 변경 */
+   .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+   }
+   .category-card {
+      max-width: none;
+   }
+}
