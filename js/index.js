@@ -107,6 +107,14 @@ async function loadTrendProduct() {
                         <strong class="sale-price">₩${formatPrice(item.discountPrice)}</strong>
                      </div>
                   </div>
+                    <div class="item-actions">
+                     <a href="#" class="btn-action btn-view-detail" aria-label="자세히 보기">
+                        <img src="./images/icons/favorite.svg" alt="자세히 보기 아이콘" />
+                     </a>
+                     <a href="#" class="btn-action btn-add-to-cart" aria-label="장바구니 담기">
+                        <img src="./images/icons/cart.svg" alt="장바구니 아이콘" />
+                     </a>
+                  </div>
                </div>`;
             })
             .join('');
@@ -185,36 +193,52 @@ async function loadTrendProduct() {
 
 /**
  * @name loadInstagramFeed
- * @description 인스타그램 피드 데이터를 JSON 파일에서 로드해서 화면에 뿌려주는 함수.
+ * @description 인스타그램 피드 데이터를 로드하여 실제 게시물 느낌으로 화면에 표시합니다.
  */
 async function loadInstagramFeed() {
    const instarGrid = document.querySelector('.instar-grid');
    if (!instarGrid) return;
+
    try {
       const feedData = await fetchJSON('./data/instagram-feed.json');
-      instarGrid.innerHTML = feedData
+
+      const feedHtml = feedData
          .map(
             (item) => `
-         <a href="#" class="instar-item" >
-            <img src="${item.imageUrl}" alt="인스타그램 피드 이미지"> <br>
-            <span class="hashtag">${item.hashtag}</span>
-            <div class="instar-item__overlay">
-               <span class="likes">❤️ ${item.likes}</span>
-               <span class="comments">💬 ${item.comments}</span>
-            </div>
-         </a>`,
+         <div class="instar-item" >
+            <a href="#" class="instar-link">
+               <div class="instar-image-wrapper">
+                  <img class="instar-image" src="${item.imageUrl}" alt="${item.hashtag} 인스타그램 피드 이미지">
+                  <div class="instar-image-overlay">
+                     <div class="instar-stats">
+                        <span class="likes">❤️ ${item.likes}</span>
+                        <span class="comments">💬 ${item.comments}</span>
+                     </div>
+                  </div>
+               </div>
+               <div class="instar-info">
+                  <div class="instar-profile">
+                     <img class="profile-image" src="${item.profileImage}" alt="${item.userId} 프로필 이미지">
+                     <span class="user-id">${item.userId}</span>
+                  </div>
+                  <span class="hashtag">${item.hashtag}</span>
+               </div>
+            </a>
+         </div>
+      `,
          )
          .join('');
+
+      instarGrid.innerHTML = feedHtml;
    } catch (error) {
-      console.error('인스타그램 피드 로딩 중 에러:', error);
-      instarGrid.innerHTML = `<p class="error-message">피드를 불러올 수 없어.</p>`;
+      console.error('인스타그램 피드 로딩 오류:', error);
+      instarGrid.innerHTML = `<p class="error-message">피드를 불러올 수 없습니다.</p>`;
    }
 }
-
 /**
  * @name initLookBookGallery
  * @description Isotope.js를 사용하여 필터링 되는 룩북 갤러리를 만드는 함수.
- *              - 오버레이에 가격, 할인율, 상세 정보를 포함하도록 수정.
+ *              - 오버레이에 가격, 상세 정보 및 액션 버튼(자세히 보기, 장바구니)을 포함하도록 수정.
  */
 async function initLookBookGallery() {
    const $gallery = $('.showroom__gallery');
@@ -226,7 +250,6 @@ async function initLookBookGallery() {
 
       const galleryHtml = galleryData
          .map((item) => {
-            // 가격 정보가 있을 때만 할인율을 계산하여 오류 방지
             let discountRate = 0;
             let priceHtml = '';
 
@@ -242,7 +265,7 @@ async function initLookBookGallery() {
             `;
             }
 
-            // return 키워드를 추가해야 map 함수가 각 아이템의 HTML을 반환할 수 있음
+            // [수정] return 구문 내부에 .item-actions 버튼 그룹 추가
             return `
             <div class="showroom__gallery-item ${item.category}">
                <img src="${item.src}" alt="${item.title}">
@@ -250,9 +273,18 @@ async function initLookBookGallery() {
                   <div class="product-info">
                      <h3 class="product-title">${item.title}</h3>
                      <p class="product-detail">${item.detail || ''}</p>
-                     ${priceHtml} <br>
-                     <a href="#" class="filter-btn">구매하기</a>
+                     ${priceHtml}
                   </div>
+                  <!-- 🔹 버튼 그룹 시작 🔹 -->
+                  <div class="item-actions">
+                     <a href="#" class="btn-action btn-view-detail" aria-label="자세히 보기">
+                        <img src="./images/icons/search.svg" alt="자세히 보기 아이콘" />
+                     </a>
+                     <a href="#" class="btn-action btn-add-to-cart" aria-label="장바구니 담기">
+                        <img src="./images/icons/cart.svg" alt="장바구니 아이콘" />
+                     </a>
+                  </div>
+                  <!-- 🔹 버튼 그룹 끝 🔹 -->
                </div>
             </div>
          `;

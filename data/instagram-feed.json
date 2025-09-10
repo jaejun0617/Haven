@@ -1,58 +1,74 @@
 [
    {
       "id": 1,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "imageUrl": "https://igaboro.kr/data/goods/25/07/30/1000971639/1000971639_main_018.jpg",
       "likes": 1204,
       "comments": 35,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "hashtag": "#Haver #소파 #감성 #공간",
+      "profileImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&h=100&fit=crop",
+      "userId": "design_by_jane"
    },
    {
       "id": 2,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "imageUrl": "https://igaboro.kr/data/goods/25/07/30/1000971616/1000971616_main_0100.jpg",
       "likes": 987,
       "comments": 22,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "hashtag": "#Haver #이태리가죽 #미니멀라이프",
+      "profileImage": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100&h=100&fit=crop",
+      "userId": "minimalist_living"
    },
    {
       "id": 3,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "imageUrl": "https://igaboro.kr/data/goods/25/06/26/1000971522/1000971522_main_052.jpg",
       "likes": 2310,
       "comments": 58,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "hashtag": "#Haver #가죽소파 #편안함",
+      "profileImage": "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&h=100&fit=crop",
+      "userId": "cozy_corners"
    },
    {
       "id": 4,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
+      "imageUrl": "https://igaboro.kr/data/goods/25/06/24/1000971496/1000971496_main_086.jpg",
       "likes": 754,
       "comments": 19,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "hashtag": "#Haver #카우치소파 #거실인테리어",
+      "profileImage": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=100&h=100&fit=crop",
+      "userId": "urban_loft_life"
    },
    {
       "id": 5,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
-      "likes": 1204,
-      "comments": 35,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "imageUrl": "https://igaboro.kr/data/goods/25/07/30/1000971635/1000971635_main_038.jpg",
+      "likes": 1845,
+      "comments": 41,
+      "hashtag": "#Haver #패브릭소파 #홈스타일링",
+      "profileImage": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=100&h=100&fit=crop",
+      "userId": "scandi.home.style"
    },
    {
       "id": 6,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
-      "likes": 987,
-      "comments": 22,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "imageUrl": "https://igaboro.kr/data/goods/25/07/30/1000971612/1000971612_main_094.jpg",
+      "likes": 892,
+      "comments": 31,
+      "hashtag": "#Haver #신혼가구 #집꾸미기",
+      "profileImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&h=100&fit=crop",
+      "userId": "boho_vibes_only"
    },
    {
       "id": 7,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
-      "likes": 2310,
-      "comments": 58,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "imageUrl": "https://igaboro.kr/data/goods/22/09/39/1000963750/1000963750_main_069.jpg",
+      "likes": 2543,
+      "comments": 67,
+      "hashtag": "#Haver #리클라이너 #휴식",
+      "profileImage": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&h=100&fit=crop",
+      "userId": "interior_addict"
    },
    {
       "id": 8,
-      "imageUrl": "../images/main/InstagramFeed/02.jpeg",
-      "likes": 754,
-      "comments": 19,
-      "hashtag": "#Haver #소파 #감성 #공간"
+      "imageUrl": "https://igaboro.kr/data/goods/20/03/11/1000952840/1000952840_main_057.jpg",
+      "likes": 1120,
+      "comments": 28,
+      "hashtag": "#Haver #거실장 #미드센츄리모던",
+      "profileImage": "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&h=100&fit=crop",
+      "userId": "my_haven_story"
    }
 ]

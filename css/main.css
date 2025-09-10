@@ -254,6 +254,27 @@
    font-weight: 600;
    z-index: 2;
 }
+.product-card .item-actions {
+   display: flex;
+   justify-content: flex-end;
+   gap: 0.5rem;
+   padding: 0.3rem 0.5rem;
+}
+
+.product-card .btn-action {
+   display: flex;
+   width: 24px;
+   height: 40px;
+   border-radius: 50%;
+   transition:
+      background-color 0.3s ease,
+      transform 0.3s ease;
+}
+
+.product-card .btn-action:hover {
+   transform: scale(1.1);
+}
+
 /* =================================================================
    Design Story Modal: 스토리 상세 정보 모달 
 ================================================================= */
@@ -574,30 +595,23 @@
    transform: scale(1.05);
 }
 
-.filter-btn {
-   border: 1px solid var(--color-surface);
-   padding: 0.3rem 1rem;
-   transition: all 0.3s ease-in-out;
-   font-size: 1rem;
-}
-
-.filter-btn:hover {
-   color: var(--color-surface);
-   background-color: #000000;
-}
-
-/* 오버레이의 기본 상태  */
 .item-overlay {
    position: absolute;
    top: 0;
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(0, 0, 0, 0.6);
+   background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.2) 60%,
+      rgba(0, 0, 0, 0.8) 100%
+   );
    color: #fff;
    display: flex;
+
    flex-direction: column;
-   justify-content: flex-end;
+   justify-content: space-between;
    padding: 1.5rem;
    opacity: 0;
    transition: opacity 0.4s ease;
@@ -607,13 +621,29 @@
    opacity: 1;
 }
 
+.item-overlay .product-info,
+.item-overlay .item-actions {
+   transition:
+      transform 0.4s ease,
+      opacity 0.4s ease;
+}
+
 .item-overlay .product-info {
    transform: translateY(20px);
-   transition: transform 0.4s ease;
+   opacity: 0;
+}
+.item-overlay .item-actions {
+   transform: translateY(-20px);
+   opacity: 0;
 }
 
 .showroom__gallery-item:hover .product-info {
    transform: translateY(0);
+   opacity: 1;
+}
+.showroom__gallery-item:hover .item-actions {
+   transform: translateY(0);
+   opacity: 1;
 }
 
 .item-overlay .product-title {
@@ -624,10 +654,10 @@
 
 .item-overlay .product-detail {
    font-size: 0.9rem;
-   color: #e0e0e0;
+   color: var(--color-surface);
    margin-bottom: 1rem;
    display: -webkit-box;
-   -webkit-line-clamp: 3;
+   -webkit-line-clamp: 2;
    -webkit-box-orient: vertical;
    overflow: hidden;
 }
@@ -647,58 +677,149 @@
 .item-overlay .sale-price {
    color: var(--color-surface);
 }
+
+.item-actions {
+   display: flex;
+   justify-content: flex-end;
+   gap: 0.5rem;
+}
+
+.btn-action {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 40px;
+   height: 40px;
+   background-color: rgba(255, 255, 255, 0.2);
+   border-radius: 50%;
+   transition:
+      background-color 0.3s ease,
+      transform 0.3s ease;
+}
+
+.btn-action:hover {
+   background-color: var(--color-surface);
+   transform: scale(1.1);
+}
+
+.btn-action img {
+   width: 20px;
+   height: 20px;
+}
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* 7. Instagram Section                               */
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-.instagram-feed {
-   width: 100%;
-}
-
 .instar-grid {
-   /* display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
    gap: 1.5rem;
 }
 
 .instar-item {
-   width: 44%;
-
-   margin-bottom: 1.5rem;
-   position: relative;
-   overflow: hidden;
+   background-color: var(--card-bg-color, #fff);
+   border: 1px solid var(--card-border-color, #eee);
    border-radius: 12px;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-   cursor: pointer;
+   overflow: hidden;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+   transition: all 0.3s ease;
 }
 
-.instar-item img {
+.instar-item:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.instar-link {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+}
+
+.instar-image-wrapper {
+   position: relative;
+   padding-top: 100%;
+   overflow: hidden;
+}
+
+.instar-image {
+   position: absolute;
+   top: 0;
+   left: 0;
    width: 100%;
-   height: auto;
+   height: 100%;
    object-fit: cover;
-   display: block;
    transition: transform 0.4s ease;
 }
 
-.instar-item:hover img {
+.instar-item:hover .instar-image {
    transform: scale(1.05);
 }
 
-.instar-item__overlay {
+.instar-image-overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.3);
    display: flex;
-   gap: 0.5rem;
+   align-items: center;
+   justify-content: center;
+   opacity: 0;
+   transition: opacity 0.3s ease;
+}
+
+.instar-item:hover .instar-image-overlay {
+   opacity: 1;
+}
+
+.instar-stats {
+   display: flex;
+   gap: 1.5rem;
+   color: #fff;
+   font-size: 1rem;
+   font-weight: 600;
+   transform: translateY(10px);
+   opacity: 0;
+   transition: all 0.3s ease 0.1s;
+}
+
+.instar-item:hover .instar-stats {
+   transform: translateY(0);
+   opacity: 1;
+}
+
+.instar-info {
    padding: 1rem;
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
 }
+
+.instar-profile {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   margin-bottom: 0.5rem;
+}
+
+.profile-image {
+   width: 28px;
+   height: 28px;
+   border-radius: 50%;
+   border: 1px solid var(--card-border-color, #eee);
+}
+
+.user-id {
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: var(--text-primary);
+}
+
 .hashtag {
-   padding: 0rem 1rem;
-}
-.likes,
-.comments {
-   font-size: 14px;
-   cursor: pointer;
+   font-size: 0.9rem;
+   color: var(--text-secondary);
 }
 
 @media (min-width: 769px) {
@@ -754,8 +875,8 @@
    }
 
    .instar-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
    }
    .story-sticky-wrapper {
       flex-direction: row;
@@ -800,6 +921,15 @@
       font-size: 1rem;
       line-height: 1.8;
    }
+   .item-overlay .product-detail {
+      font-size: 0.9rem;
+      color: #e0e0e0;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+   }
 }
 @media (min-width: 1025px) {
    .hero__content h2,
@@ -828,8 +958,7 @@
       font-size: 1.4rem;
    }
    .instar-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+      grid-template-columns: repeat(4, 1fr);
    }
    .instar-item {
       width: 100%;
