@@ -2,21 +2,31 @@
 // [ 메인 실행 로직 ]
 // ===================================================================
 document.addEventListener('DOMContentLoaded', () => {
-   console.log('DOM이 준비되었습니다. 스크립트를 실행합니다.');
+   console.log('DOM이 준비되었어. 스크립트를 실행할게.');
 
+   // 각 기능별 초기화 함수 호출
    initMobileMenu();
+   loadTrendProduct();
+   // formatPrice(); // 이 함수는 다른 함수 내부에서 사용되므로 여기서 직접 호출할 필요 없어.
    loadInstagramFeed();
    initLookBookGallery();
-   setupDesignStoryScroll(); // Design Story 애니메이션 초기화
+   setupDesignStoryScroll();
 });
 
 // ===================================================================
 // [ 공용 유틸리티 함수 ]
 // ===================================================================
+
+/**
+ * @name fetchJSON
+ * @description 지정된 URL에서 JSON 데이터를 비동기적으로 가져오는 함수야.
+ * @param {string} url - 불러올 JSON 파일의 경로
+ * @returns {Promise<any>} - 성공하면 파싱된 JSON 데이터, 실패하면 에러를 던짐.
+ */
 async function fetchJSON(url) {
    const response = await fetch(url);
    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status} for URL: ${url}`);
+      throw new Error(`HTTP 에러! 상태: ${response.status}, URL: ${url}`);
    }
    return await response.json();
 }
@@ -25,60 +35,299 @@ async function fetchJSON(url) {
 // [ 기능별 함수 정의 ]
 // ===================================================================
 
+/**
+ * @name initMobileMenu
+ * @description 모바일 환경에서 메뉴 버튼 클릭하면 네비게이션을 토글하는 기능.
+ */
 function initMobileMenu() {
-   /* 이전과 동일 */
-}
-async function loadInstagramFeed() {
-   /* 이전과 동일 */
-}
-async function initLookBookGallery() {
-   /* 이전과 동일 */
+   const mobileMenuButton = document.querySelector('.mobile-nav-toggle');
+   const navMenu = document.querySelector('.main-nav');
+   if (mobileMenuButton && navMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+         navMenu.classList.toggle('active');
+         mobileMenuButton.classList.toggle('active');
+      });
+   }
 }
 
 /**
- * 📄 [Design Stories] 스크롤 기반 스토리 애니메이션 및 모달 기능 설정 (최적화 버전)
+ * @name formatPrice
+ * @description 숫자를 통화 형식(세 자리마다 콤마)으로 바꿔주는 함수.
+ * @param {string | number} price - 변환할 가격
+ * @returns {string} - 포맷팅된 가격 문자열 (예: "2,500,000")
+ */
+function formatPrice(price) {
+   return Number(price).toLocaleString();
+}
+
+/**
+ * @name loadTrendProduct
+ * @description 트렌드 인기상품을 4개씩 점진적으로 로드하고, 다 보여주면 '닫기' 기능으로 전환.
+ */
+async function loadTrendProduct() {
+   const trendGrid = document.querySelector('.product-grid');
+   const viewMoreContainer = document.querySelector(
+      '.featured-products .section-footer',
+   );
+
+   if (!trendGrid || !viewMoreContainer) {
+      console.error(
+         '필수 요소(.product-grid 또는 .section-footer)를 못 찾았어.',
+      );
+      return;
+   }
+
+   try {
+      const allTrendData = await fetchJSON('./data/trendData.json');
+
+      const initialItemCount = 4; // 처음에 보여줄 상품 개수
+      const itemsPerLoad = 4; // "더 보기" 클릭할 때마다 추가할 상품 개수
+      let currentCount = initialItemCount; // 현재 화면에 보이는 상품 총 개수
+
+      // 상품 데이터를 HTML로 만들어서 렌더링하는 함수
+      const renderProducts = (products) => {
+         // innerHTML 대신 insertAdjacentHTML을 써서 기존 콘텐츠는 냅두고 추가만 해.
+         // 이렇게 하면 "더 보기" 눌렀을 때 화면 깜빡임 없이 부드럽게 추가돼.
+         const newProductsHtml = products
+            .map((item) => {
+               const discountRate = Math.round(
+                  ((item.price - item.discountPrice) / item.price) * 100,
+               );
+               return `
+               <div class="product-card" data-aos="fade-up">
+                  <div class="product-image-wrapper">
+                     <img src="${item.src}" alt="${item.title}" data-aos="zoom-in" />
+                     ${discountRate > 0 ? `<span class="discount-badge">${discountRate}%</span>` : ''}
+                  </div>
+                  <div class="product-info">
+                     <h3 class="product-title">${item.title}</h3>
+                     <p class="product-detail">${item.detail}</p>
+                     <div class="product-price">
+                        ${discountRate > 0 ? `<del class="original-price">₩${formatPrice(item.price)}</del>` : ''}
+                        <strong class="sale-price">₩${formatPrice(item.discountPrice)}</strong>
+                     </div>
+                  </div>
+               </div>`;
+            })
+            .join('');
+
+         trendGrid.insertAdjacentHTML('beforeend', newProductsHtml);
+      };
+
+      // 버튼 상태랑 텍스트 업데이트하는 함수
+      const updateButton = () => {
+         const viewMoreBtn =
+            viewMoreContainer.querySelector('.section-footer a');
+         if (!viewMoreBtn) return;
+
+         // 현재 보여준 상품 개수가 전체 개수보다 많거나 같아지면
+         if (currentCount >= allTrendData.length) {
+            viewMoreBtn.textContent = '간략히 보기'; // "닫기" 기능으로 전환
+         } else {
+            viewMoreBtn.textContent = '더 보기'; // "더 보기" 기능 유지
+         }
+      };
+
+      // --- 초기 로드 ---
+      trendGrid.innerHTML = ''; // 시작하기 전에 컨테이너를 한번 비워주고.
+      const initialItems = allTrendData.slice(0, initialItemCount);
+      renderProducts(initialItems);
+      updateButton();
+
+      // --- 이벤트 리스너 설정 ---
+      if (allTrendData.length > initialItemCount) {
+         viewMoreContainer.style.display = 'flex'; // 보여줄 상품 더 있으면 버튼 보이기
+
+         const viewMoreBtn =
+            viewMoreContainer.querySelector('.section-footer a');
+         if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', (e) => {
+               e.preventDefault();
+
+               // 현재 "간략히 보기"(닫기) 상태일 때
+               if (currentCount >= allTrendData.length) {
+                  currentCount = initialItemCount; // 보여줄 개수를 초기값으로 리셋
+                  trendGrid.innerHTML = ''; // 목록을 싹 비움
+                  const newInitialItems = allTrendData.slice(
+                     0,
+                     initialItemCount,
+                  );
+                  renderProducts(newInitialItems); // 초기 아이템만 다시 렌더링
+                  updateButton(); // 버튼 상태 업데이트
+
+                  // 페이지 상단으로 부드럽게 스크롤 (사용자 경험 향상)
+                  trendGrid.scrollIntoView({
+                     behavior: 'smooth',
+                     block: 'start',
+                  });
+               }
+               // "더 보기" 상태일 때
+               else {
+                  const nextItems = allTrendData.slice(
+                     currentCount,
+                     currentCount + itemsPerLoad,
+                  );
+                  renderProducts(nextItems); // 다음 4개 아이템 추가 렌더링
+                  currentCount += itemsPerLoad; // 현재 보여준 개수 업데이트
+                  updateButton(); // 버튼 상태 업데이트
+               }
+            });
+         }
+      } else {
+         // 더 보여줄 상품이 없으면 버튼을 아예 숨겨버림
+         viewMoreContainer.style.display = 'none';
+      }
+   } catch (error) {
+      console.error('트렌드 인기상품 로딩 중 에러:', error);
+      trendGrid.innerHTML = `<p class="error-message">상품을 불러올 수 없어.</p>`;
+   }
+}
+
+/**
+ * @name loadInstagramFeed
+ * @description 인스타그램 피드 데이터를 JSON 파일에서 로드해서 화면에 뿌려주는 함수.
+ */
+async function loadInstagramFeed() {
+   const instarGrid = document.querySelector('.instar-grid');
+   if (!instarGrid) return;
+   try {
+      const feedData = await fetchJSON('./data/instagram-feed.json');
+      instarGrid.innerHTML = feedData
+         .map(
+            (item) => `
+         <a href="#" class="instar-item" >
+            <img src="${item.imageUrl}" alt="인스타그램 피드 이미지"> <br>
+            <span class="hashtag">${item.hashtag}</span>
+            <div class="instar-item__overlay">
+               <span class="likes">❤️ ${item.likes}</span>
+               <span class="comments">💬 ${item.comments}</span>
+            </div>
+         </a>`,
+         )
+         .join('');
+   } catch (error) {
+      console.error('인스타그램 피드 로딩 중 에러:', error);
+      instarGrid.innerHTML = `<p class="error-message">피드를 불러올 수 없어.</p>`;
+   }
+}
+
+/**
+ * @name initLookBookGallery
+ * @description Isotope.js를 사용하여 필터링 되는 룩북 갤러리를 만드는 함수.
+ *              - 오버레이에 가격, 할인율, 상세 정보를 포함하도록 수정.
+ */
+async function initLookBookGallery() {
+   const $gallery = $('.showroom__gallery');
+   const $filter = $('.showroom__filter');
+   if (!$gallery.length) return;
+
+   try {
+      const galleryData = await fetchJSON('./data/galleryData.json');
+
+      const galleryHtml = galleryData
+         .map((item) => {
+            // 가격 정보가 있을 때만 할인율을 계산하여 오류 방지
+            let discountRate = 0;
+            let priceHtml = '';
+
+            if (item.price && item.discountPrice) {
+               discountRate = Math.round(
+                  ((item.price - item.discountPrice) / item.price) * 100,
+               );
+               priceHtml = `
+               <div class="product-price">
+                  ${discountRate > 0 ? `<del class="original-price">₩${formatPrice(item.price)}</del>` : ''}
+                  <strong class="sale-price">₩${formatPrice(item.discountPrice)}</strong>
+               </div>
+            `;
+            }
+
+            // return 키워드를 추가해야 map 함수가 각 아이템의 HTML을 반환할 수 있음
+            return `
+            <div class="showroom__gallery-item ${item.category}">
+               <img src="${item.src}" alt="${item.title}">
+               <div class="item-overlay">
+                  <div class="product-info">
+                     <h3 class="product-title">${item.title}</h3>
+                     <p class="product-detail">${item.detail || ''}</p>
+                     ${priceHtml} <br>
+                     <a href="#" class="filter-btn">구매하기</a>
+                  </div>
+               </div>
+            </div>
+         `;
+         })
+         .join('');
+
+      $gallery.html(galleryHtml);
+
+      $gallery.imagesLoaded(() => {
+         $gallery.isotope({
+            itemSelector: '.showroom__gallery-item',
+            layoutMode: 'masonry',
+            filter: '.living-room',
+         });
+      });
+
+      $filter.on('click', 'li', function () {
+         $gallery.isotope({ filter: $(this).attr('data-filter') });
+         $filter.find('li').removeClass('--active');
+         $(this).addClass('--active');
+      });
+   } catch (error) {
+      console.error('룩북 갤러리 초기화 중 에러:', error);
+      $gallery.html('<p class="error-message">갤러리를 불러올 수 없어.</p>');
+   }
+}
+/**
+ * @name setupDesignStoryScroll
+ * @description 스크롤에 따라 브랜드 스토리가 전환되는 인터랙티브 섹션 설정.
+ *              - 스티키 스크롤로 이미지/텍스트 전환 애니메이션
+ *              - 현재 보이는 스토리에 대한 상세 정보 모달창 기능
+ *              - '자세히 보기' 버튼 링크 동적 변경 및 모달 트리거
  */
 async function setupDesignStoryScroll() {
    const storySection = document.querySelector('#design-stories');
    if (!storySection) return;
 
-   // 애니메이션에 필요한 요소 선택
+   // 애니메이션이랑 모달에 필요한 HTML 요소들 미리 찾아놓기
    const scrollContainer = document.querySelector('.story-scroll-container');
    const slides = document.querySelectorAll('.story-slide');
    const storyTitle = document.getElementById('story-title');
    const storyDescription = document.getElementById('story-description');
    const storyContent = document.querySelector('.story-content');
-
-   // [추가] 모달창 관련 요소 선택
-   const storyModal = document.getElementById('storyDetailModal'); // HTML에 모달 ID가 있는지 확인하세요!
+   const storyDetailButton = storyContent.querySelector('.btn'); // '자세히 보기' 버튼
+   const storyModal = document.getElementById('storyDetailModal');
 
    if (
       !scrollContainer ||
       slides.length === 0 ||
       !storyTitle ||
-      !storyDescription
+      !storyDescription ||
+      !storyDetailButton
    ) {
       return;
    }
-
-   // [추가] 모달이 없다면 모달 기능 없이 진행
    const modalContent = storyModal
       ? storyModal.querySelector('.modal-content')
       : null;
 
    try {
-      // 수정된 'design-stories.json' 파일을 로드합니다.
+      // 가구 카테고리별 스토리가 담긴 JSON 데이터 로드
       const storyData = await fetchJSON('./data/design-stories.json');
 
       if (storyData.length > 0) {
          storyTitle.textContent = storyData[0].title;
          storyDescription.innerHTML = `<h3>${storyData[0].headline}</h3><p class="overview">${storyData[0].overview}</p>`;
+         storyDetailButton.href = storyData[0].links.shop_category; // 초기 버튼 링크 설정
       }
 
+      // 스크롤 이벤트 최적화를 위한 'ticking' 플래그 변수
       let ticking = false;
+      let currentActiveIndex = 0; // 현재 활성화된 슬라이드 인덱스 추적
 
+      // 스크롤 위치에 따라 실제 애니메이션을 처리하는 함수
       const handleScrollAnimation = () => {
-         // ... (스크롤 애니메이션 로직은 이전 답변과 동일) ...
          const containerRect = scrollContainer.getBoundingClientRect();
          const viewportHeight = window.innerHeight;
          const isAnimating =
@@ -94,20 +343,21 @@ async function setupDesignStoryScroll() {
                scrollProgress * (slides.length - 0.001),
             );
 
-            if (
-               storyData[activeIndex] &&
-               storyTitle.textContent !== storyData[activeIndex].title
-            ) {
+            // 활성화된 슬라이드가 바뀔 때만 내용 업데이트
+            if (activeIndex !== currentActiveIndex && storyData[activeIndex]) {
+               currentActiveIndex = activeIndex; // 현재 인덱스 업데이트
                storyContent.style.opacity = 0;
                setTimeout(() => {
                   storyTitle.textContent = storyData[activeIndex].title;
                   storyDescription.innerHTML = `<h3>${storyData[activeIndex].headline}</h3><p class="overview">${storyData[activeIndex].overview}</p>`;
+                  storyDetailButton.href =
+                     storyData[activeIndex].links.shop_category; // 버튼 링크 동적 변경
                   storyContent.style.opacity = 1;
                }, 300);
             }
 
+            // 모든 슬라이드의 시각적 상태(위치, 투명도) 업데이트
             slides.forEach((slide, index) => {
-               // ... (슬라이드 상태 업데이트 로직은 이전 답변과 동일) ...
                slide.classList.remove('is-active', 'is-previous');
                if (index === activeIndex) {
                   slide.classList.add('is-active');
@@ -128,6 +378,7 @@ async function setupDesignStoryScroll() {
          }
       };
 
+      // 스크롤 이벤트를 requestAnimationFrame으로 감싸서 성능 최적화
       window.addEventListener('scroll', () => {
          if (!ticking) {
             window.requestAnimationFrame(() => {
@@ -138,9 +389,7 @@ async function setupDesignStoryScroll() {
          }
       });
 
-      // --- [수정] 모달 관련 로직 ---
-
-      // 모달 기능은 모달 요소가 있을 때만 활성화
+      // 모달창 관련 기능 (모달 요소가 HTML에 있을 때만 활성화)
       if (storyModal && modalContent) {
          function openStoryModal(data) {
             const featuresHtml = data.features
@@ -149,22 +398,10 @@ async function setupDesignStoryScroll() {
                      `<div class="feature-item"><h4>${f.name}</h4><p class="tech-stack"><strong>Keywords:</strong> ${f.tech.join(', ')}</p><p class="feature-desc">${f.desc}</p></div>`,
                )
                .join('');
-
-            // '자세히 보기' 또는 '쇼핑하기' 버튼 HTML 생성
             const linkHtml = data.links.shop_category
                ? `<a href="${data.links.shop_category}" class="link-shop">Shop This Category</a>`
                : '';
-
-            modalContent.innerHTML = `
-                <button class="modal-close-btn">&times;</button>
-                <h2>${data.title}</h2>
-                <p class="overview">${data.overview}</p>
-                <hr>
-                ${featuresHtml}
-                <div class="modal-links">
-                   ${linkHtml}
-                </div>
-             `;
+            modalContent.innerHTML = `<button class="modal-close-btn">&times;</button><h2>${data.title}</h2><p class="overview">${data.overview}</p><hr>${featuresHtml}<div class="modal-links">${linkHtml}</div>`;
             storyModal.classList.add('visible');
             modalContent
                .querySelector('.modal-close-btn')
@@ -179,21 +416,24 @@ async function setupDesignStoryScroll() {
             if (e.target === storyModal) closeStoryModal();
          });
 
+         // '자세히 보기' 버튼 누르면 모달창 열기
+         storyDetailButton.addEventListener('click', (e) => {
+            e.preventDefault(); // 기본 링크 이동 막기
+            if (storyData[currentActiveIndex]) {
+               openStoryModal(storyData[currentActiveIndex]);
+            }
+         });
+
+         // 이미지(오른쪽 패널) 눌러도 모달창 열기
          const storyVisuals = document.querySelector('.story-visuals');
          storyVisuals.addEventListener('click', (e) => {
             const clickedSlide = e.target.closest('.story-slide.is-active');
-            if (clickedSlide) {
-               const activeIndex = Array.from(slides).indexOf(clickedSlide);
-               if (storyData[activeIndex]) {
-                  openStoryModal(storyData[activeIndex]);
-               }
+            if (clickedSlide && storyData[currentActiveIndex]) {
+               openStoryModal(storyData[currentActiveIndex]);
             }
          });
       }
    } catch (error) {
-      console.error('Design Stories 애니메이션 설정 중 오류 발생:', error);
+      console.error('Design Stories 애니메이션 설정 중 에러:', error);
    }
 }
-
-// [참고] initMobileMenu, loadInstagramFeed, initLookBookGallery 함수는 이전과 동일하게 유지합니다.
-// 여기에 다시 작성하지 않았지만, 실제 파일에는 존재해야 합니다.

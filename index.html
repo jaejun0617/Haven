@@ -3,13 +3,18 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>CASA DECO - 당신의 공간을 위한 가구</title>
+      <title>Haven - 당신의 공간을 위한 가구</title>
       <link rel="stylesheet" href="./css/common.css" />
       <link rel="stylesheet" href="./css/header-footer.css" />
       <link rel="stylesheet" href="./css/main.css" />
 
       <!-- AOS 라이브러리 CSS CDN -->
       <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+      <!-- Link Swiper's CSS -->
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
    </head>
    <body>
       <div class="wrapper">
@@ -81,18 +86,92 @@
             <!-- =================================================================== -->
             <section class="hero">
                <div class="container">
-                  <div class="hero__content">
-                     <h2 data-aos="fade-up">2025 F/W Serenity Collection</h2>
-                     <p data-aos="fade-up" data-aos-delay="100">
-                        고요함과 아늑함이 공존하는 당신만의 휴식처를 만나보세요.
-                     </p>
-                     <a
-                        href="/collections/fw2025"
-                        class="btn btn--primary"
-                        data-aos="fade-up"
-                        data-aos-delay="200"
-                        >컬렉션 보기</a
-                     >
+                  <div class="swiper mySwiper">
+                     <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>공간을 정의하는 디자인</h2>
+                              <p>
+                                 보이지 않는 부분까지 완벽을 추구하는 <br />
+                                 Haven의 디자인 철학을 느껴보세요.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-07.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>2025 F/W Serenity Collection</h2>
+                              <p>
+                                 시간이 흘러도 변치 않는 가치. <br />
+                                 당신의 일상에 깊이를 더합니다.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-08.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>최고의 휴식을 위한 단 하나의 소파</h2>
+                              <p>
+                                 이탈리아 최상급 가죽과 장인의 <br />
+                                 손길로 완성된 완벽한 편안함.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-01.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>당신의 이야기가 시작되는 곳, 다이닝</h2>
+                              <p>
+                                 북미산 원목의 견고함으로 <br />
+                                 모든 소중한 순간을 함께하세요.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-02.png" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>온전한 쉼이 있는 공간</h2>
+                              <p>
+                                 하루의 끝, 가장 편안한 안식처가 되어 줄 <br />
+                                 침실 컬렉션을 확인해보세요.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-03.png" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>장인정신이 깃든 디테일</h2>
+                              <p>
+                                 고요함과 아늑함이 공존하는 <br />
+                                 당신만의 휴식처를 만나보세요.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-04.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>당신만의 안식처를 발견하세요</h2>
+                              <p>
+                                 가구는 공간을 채우고, <br />
+                                 공간은 당신의 삶을 채웁니다.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-05.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                           <div class="hero-title">
+                              <h2>새로운 영감, 완벽한 스타일링</h2>
+                              <p>
+                                 Haven의 쇼룸에서 당신의 공간을 위한 <br />
+                                 최적의 솔루션을 찾아보세요.
+                              </p>
+                           </div>
+                           <img src="./images//main/banner/banner-06.jpg" />
+                        </div>
+                     </div>
+                     <div class="swiper-button-next"></div>
+                     <div class="swiper-button-prev"></div>
+                     <div class="swiper-pagination"></div>
                   </div>
                </div>
             </section>
@@ -225,7 +304,7 @@
                            </div>
                         </div>
                      </div>
-                     <!-- (다른 상품 카드들도 위와 같은 구조로 data-aos-delay 값을 조정하여 추가) -->
+
                      <div class="product-card" data-aos="fade-up">
                         <img
                            src="https://igaboro.kr/data/goods//17/11/20/1000946563/946563_detail_058.jpg"
@@ -297,7 +376,7 @@
                      </div>
                   </div>
                   <div class="section-footer" data-aos="fade-up">
-                     <a href="/shop">모든 상품 보기</a>
+                     <a href="/shop">더보기</a>
                      <div class="more">
                         <img
                            src="./images/icons/view_more.png"
@@ -308,7 +387,10 @@
                   </div>
                </div>
             </section>
-            <!-- 🔹 Design Stories Section: 스크롤 인터랙션 기반의 브랜드/가구 스토리 소개 -->
+            <!-- =================================================================== -->
+            <!-- Design Stories Section: 스크롤 인터랙션 기반의 브랜드/가구 스토리 소개         -->
+            <!-- =================================================================== -->
+
             <section id="design-stories" class="section">
                <div class="story-scroll-container">
                   <div class="story-sticky-wrapper">
@@ -324,25 +406,25 @@
                      <div class="story-visuals">
                         <div class="story-slide is-active">
                            <img
-                              src="./images/stories/philosophy.jpg"
+                              src="./images/main/InstagramFeed/02.jpeg"
                               alt="Haven 브랜드 철학 이미지"
                            />
                         </div>
                         <div class="story-slide">
                            <img
-                              src="./images/stories/sofas.jpg"
+                              src="https://igaboro.kr/data/goods/25/07/27/1000971562/1000971562_detail_04.jpg"
                               alt="Haven 소파 이미지"
                            />
                         </div>
                         <div class="story-slide">
                            <img
-                              src="./images/stories/tables.jpg"
+                              src="https://igaboro.kr/data/goods/21/10/40/1000960147/1000960147_detail_033.jpg"
                               alt="Haven 테이블 이미지"
                            />
                         </div>
                         <div class="story-slide">
                            <img
-                              src="./images/stories/storage.jpg"
+                              src="https://igaboro.kr/data/goods/19/11/47/1000951547/1000951547_detail_083.jpg"
                               alt="Haven 수납장 이미지"
                            />
                         </div>
@@ -404,9 +486,9 @@
                      >
                         리빙룸
                      </li>
-                     <li class="showroom__filter-item" data-filter=".goods">
+                     <!-- <li class="showroom__filter-item" data-filter=".goods">
                         굿즈관
-                     </li>
+                     </li> -->
                   </ul>
                   <div
                      class="showroom__gallery"
@@ -418,21 +500,17 @@
 
             <!-- =================================================================== -->
             <!-- INSTAGRAM FEED SECTION
-            <!-- =================================================================== -->
+            <!- =================================================================== -->
             <section class="instagram-feed">
                <div class="container">
-                  <div class="section-title" data-aos="fade-up">
+                  <div class="section-title">
                      <h2>#Haver</h2>
                      <p>
                         고객들의 실제 후기에서 당신의 다음 인테리어 영감을
                         발견하세요.
                      </p>
                   </div>
-                  <div
-                     class="instar-grid"
-                     data-aos="fade-up"
-                     data-aos-delay="100"
-                  ></div>
+                  <div class="instar-grid"></div>
                </div>
             </section>
          </main>
@@ -447,7 +525,7 @@
          <!-- =================================================================== -->
          <footer class="footer">
             <div class="container">
-               <div class="footer-content" data-aos="fade-up">
+               <div class="footer-content">
                   <div class="footer-copyright">
                      <p>
                         본 사이트는 학습 및 개인 포트폴리오 용도로 제작되었으며,
@@ -466,6 +544,9 @@
       </div>
 
       <!-- 스크립트 라이브러리 -->
+      <!-- Swiper JS -->
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
       <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
@@ -480,6 +561,24 @@
             duration: 800, // 애니메이션 지속 시간 (ms)
             easing: 'ease-out-cubic', // 부드러운 이징 효과
             anchorPlacement: 'top-bottom', // 요소의 상단이 창 하단에 닿을 때 트리거
+         });
+
+         var swiper = new Swiper('.mySwiper', {
+            spaceBetween: 30,
+            effect: 'fade',
+            loop: true,
+            autoplay: {
+               delay: 7000,
+               disableOnInteraction: false,
+            },
+            navigation: {
+               nextEl: '.swiper-button-next',
+               prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+               el: '.swiper-pagination',
+               clickable: true,
+            },
          });
       </script>
    </body>
