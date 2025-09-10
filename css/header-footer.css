@@ -174,22 +174,185 @@
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* 3. Footer                                         */
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
-.footer {
-   padding: 1rem 0;
-   background-color: var(--color-secondary);
+
+footer {
+   background-color: var(--color-text-primary); /* 어두운 배경색 */
+   color: #a0aec0; /* 부드러운 회색 텍스트 */
+   padding: 4rem 0 2rem 0;
+   font-size: 0.9rem; /* 14.4px */
 }
-.footer .container {
-   padding: 0rem;
-}
+
 .footer-content {
    display: flex;
    flex-direction: column;
-   align-items: center;
-   text-align: center;
    gap: 2rem;
 }
-.footer-copyright p {
-   font-size: 10px;
-   color: var(--color-text-secondary);
-   line-height: 1.5;
+
+.footer-logo {
+   margin-bottom: 2rem;
+   text-align: center;
+}
+
+.footer-logo img {
+   max-width: 120px;
+   display: inline-block;
+}
+
+/* 아코디언 컬럼 스타일 */
+.footer-column {
+   padding: 1rem 0;
+   border-bottom: 1px solid #4a5568;
+}
+
+.footer-toggle {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   cursor: pointer;
+   font-size: 1rem; /* 16px */
+   font-weight: 600;
+   color: #e2e8f0; /* 밝은 회색 제목 */
+}
+
+/* 아코디언 아이콘 (+/‒) */
+.footer-toggle::after {
+   content: '+';
+   font-size: 1.5rem;
+   transition: transform 0.3s ease;
+}
+
+.footer-column.active .footer-toggle::after {
+   transform: rotate(45deg);
+}
+
+/* 아코디언 링크 목록 (기본 숨김) */
+.footer-column ul {
+   max-height: 0;
+   overflow: hidden;
+   transition:
+      max-height 0.4s ease-in-out,
+      margin-top 0.4s ease-in-out;
+}
+
+.footer-column.active ul {
+   max-height: 200px; /* 펼쳐질 최대 높이 */
+   margin-top: 1rem;
+}
+
+.footer-column ul li {
+   margin-bottom: 0.75rem;
+}
+
+.footer-column ul a:hover {
+   color: #fff;
+}
+
+/* 소셜 아이콘 스타일 */
+.footer-social {
+   display: flex;
+   gap: 1.5rem;
+}
+
+.footer-social img {
+   width: 24px;
+   height: 24px;
+   opacity: 0.8;
+   transition: opacity 0.3s ease;
+}
+.footer-social a:hover img {
+   opacity: 1;
+}
+
+/* 뉴스레터 스타일 */
+.footer-newsletter {
+   text-align: center;
+   margin-top: 2rem;
+}
+.footer-newsletter h3 {
+   font-size: 1.1rem; /* 17.6px */
+   color: #e2e8f0;
+   margin-bottom: 0.5rem;
+}
+.footer-newsletter p {
+   margin-bottom: 1.5rem;
+}
+.newsletter-form {
+   display: flex;
+   max-width: 400px;
+   margin: 0 auto;
+}
+.newsletter-form input {
+   flex-grow: 1;
+   border: 1px solid #4a5568;
+   background-color: #2d3748;
+   color: #fff;
+   padding: 0.75rem;
+   border-radius: 8px 0 0 8px;
+   outline: none;
+}
+.newsletter-form button {
+   padding: 0.75rem 1rem;
+   background-color: var(--color-primary);
+   color: #fff;
+   border-radius: 0 8px 8px 0;
+   font-weight: 600;
+}
+
+/* 저작권 텍스트 */
+.footer-copyright {
+   text-align: center;
+   font-size: 0.8rem; /* 12.8px */
+   padding-top: 2rem;
+   border-top: 1px solid #4a5568;
+}
+.footer-copyright strong {
+   color: #fff;
+}
+
+@media (min-width: 768px) {
+   .footer-info {
+      display: grid;
+
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      grid-template-areas:
+         'logo links1 links2 links3'
+         'newsletter newsletter newsletter newsletter';
+      gap: 2rem;
+      text-align: left;
+   }
+
+   .footer-logo {
+      grid-area: logo;
+      margin: 0;
+      text-align: left;
+   }
+   .footer-links {
+      grid-area: links1 / links1 / links2 / links3;
+      display: contents;
+   }
+   .footer-newsletter {
+      grid-area: newsletter;
+      text-align: left;
+      margin-top: 1rem;
+   }
+   .newsletter-form {
+      margin: 0;
+   }
+
+   .footer-column {
+      border: none;
+      padding: 0;
+   }
+   .footer-toggle {
+      cursor: default;
+   }
+   .footer-toggle::after {
+      display: none;
+   }
+   .footer-column ul {
+      max-height: none;
+      overflow: visible;
+      margin-top: 1rem;
+   }
 }

@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
    loadInstagramFeed();
    initLookBookGallery();
    setupDesignStoryScroll();
+   initFooterAccordion();
 });
 
 // ===================================================================
@@ -235,6 +236,27 @@ async function loadInstagramFeed() {
       instarGrid.innerHTML = `<p class="error-message">피드를 불러올 수 없습니다.</p>`;
    }
 }
+
+/**
+ * @name initFooterAccordion
+ * @description 모바일 환경에서 푸터의 아코디언 메뉴 기능을 초기화합니다.
+ */
+function initFooterAccordion() {
+   const toggles = document.querySelectorAll('.footer-toggle');
+
+   toggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+         // 화면이 768px 이상이면 아코디언 기능을 비활성화
+         if (window.innerWidth >= 768) {
+            return;
+         }
+
+         const column = toggle.parentElement;
+         column.classList.toggle('active');
+      });
+   });
+}
+
 /**
  * @name initLookBookGallery
  * @description Isotope.js를 사용하여 필터링 되는 룩북 갤러리를 만드는 함수.
