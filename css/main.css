@@ -612,7 +612,7 @@
 
    flex-direction: column;
    justify-content: space-between;
-   padding: 1.5rem;
+
    opacity: 0;
    transition: opacity 0.4s ease;
 }
@@ -682,14 +682,16 @@
    display: flex;
    justify-content: flex-end;
    gap: 0.5rem;
+   padding-bottom: 1rem;
+   /* border: 1px solid red; */
 }
 
 .btn-action {
    display: flex;
    align-items: center;
    justify-content: center;
-   width: 40px;
-   height: 40px;
+   width: 24px;
+   height: 24px;
    background-color: rgba(255, 255, 255, 0.2);
    border-radius: 50%;
    transition:
