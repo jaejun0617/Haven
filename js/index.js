@@ -318,8 +318,9 @@ async function initLookBookGallery() {
       $gallery.imagesLoaded(() => {
          $gallery.isotope({
             itemSelector: '.showroom__gallery-item',
-            layoutMode: 'masonry',
+
             filter: '.living-room',
+            transitionDuration: '0.5s',
          });
       });
 
