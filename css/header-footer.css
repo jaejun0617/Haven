@@ -80,6 +80,7 @@
    gap: 2rem;
    padding-top: var(--header-height);
    color: var(--color-surface);
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 .main-nav.active {
    transform: translateX(0);
@@ -121,6 +122,7 @@
       flex-direction: row;
       gap: 2rem;
       padding-top: 0;
+      text-shadow: none;
    }
 
    .main-nav__list {
